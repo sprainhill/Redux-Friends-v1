@@ -12,7 +12,7 @@ class Login extends Component {
 
   handleChanges = event => {
     this.setState({
-      credential: {
+      credentials: {
         ...this.state.credentials,
         [event.target.name]: event.target.value
       }
@@ -20,9 +20,15 @@ class Login extends Component {
   };
 
   login = event => {
+    console.log("login", event);
     event.preventDefault();
     this.props.login(this.state.credentials).then(() => {
       this.props.history.push("/FriendsViewContainer");
+    });
+
+    this.setState({
+      username: "",
+      password: ""
     });
   };
 
@@ -41,7 +47,7 @@ class Login extends Component {
             type="password"
             name="password"
             placeholder="password"
-            value={this.state.credentials.username}
+            value={this.state.credentials.password}
             onChange={this.handleChanges}
           />
           <button>Log In</button>
@@ -51,7 +57,11 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  errors: state.user.errors,
+  fetching: state.user.fetching
+});
 export default connect(
-  null,
+  mapStateToProps,
   { login }
 )(Login);

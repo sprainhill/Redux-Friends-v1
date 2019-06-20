@@ -8,7 +8,7 @@ export const LOGIN_ERROR = "LOGIN_ERROR";
 
 export const login = creds => dispatch => {
   dispatch({ type: LOGIN_START });
-  axios
+  return axios
     .post("http://localhost:5000/api/login", creds)
     .then(response => {
       console.log("login response", response);
@@ -17,21 +17,27 @@ export const login = creds => dispatch => {
     })
     .catch(error => {
       console.log("error response", error.response);
+      dispatch({
+        type: LOGIN_ERROR,
+        payload: error.response.data.error
+      });
     });
 };
 
-export const getAuth = () => {
-  axios
-    .get("http://localhost:5000/api/friends", {
-      headers: { Authorization: localStorage.getItem("token") }
-    })
-    .then(response => {});
-};
+// export const getAuth = () => {
+//   axios
+//     .get("http://localhost:5000/api/friends", {
+//       headers: { Authorization: localStorage.getItem("token") }
+//     })
+//     .then(response => {});
+// };
 
 export const getFriends = () => dispatch => {
   dispatch({ type: FETCH_FRIENDS_START });
   axios
-    .get("http://localhost:5000/api/friends")
+    .get("http://localhost:5000/api/friends", {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(response => {
       console.log("getFriends response.data", response.data);
       dispatch({ type: FETCH_FRIENDS_SUCCESS, payload: response.data });
@@ -39,8 +45,8 @@ export const getFriends = () => dispatch => {
     .catch(error => {
       console.log("getFriends error", error);
       dispatch({
-        type: FETCH_FRIENDS_ERROR
-        // payload: error.response.error.data
+        type: FETCH_FRIENDS_ERROR,
+        payload: error.response.data.error
       });
     });
 };

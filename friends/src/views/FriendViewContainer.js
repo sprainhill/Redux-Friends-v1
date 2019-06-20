@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getFriends } from "../actions";
+import { getFriends } from "../actions/";
 import FriendCard from "../components/FriendCard";
 
 class FriendViewContainer extends Component {
