@@ -39,8 +39,8 @@ export const getFriends = () => dispatch => {
     .catch(error => {
       console.log("getFriends error", error);
       dispatch({
-        type: FETCH_FRIENDS_ERROR,
-        payload: error.response.error.data
+        type: FETCH_FRIENDS_ERROR
+        // payload: error.response.error.data
       });
     });
 };

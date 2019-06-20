@@ -37,10 +37,21 @@ class Login extends Component {
             value={this.state.credentials.username}
             onChange={this.handleChanges}
           />
+          <input
+            type="password"
+            name="password"
+            placeholder="password"
+            value={this.state.credentials.username}
+            onChange={this.handleChanges}
+          />
+          <button>Log In</button>
         </form>
       </div>
     );
   }
 }
 
-export default Login;
+export default connect(
+  null,
+  { login }
+)(Login);
