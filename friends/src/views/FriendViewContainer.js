@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getFriends } from "../actions/";
 import FriendCard from "../components/FriendCard";
+import FriendForm from "../components/FriendForm";
 
 class FriendViewContainer extends Component {
   componentDidMount() {
@@ -9,14 +10,18 @@ class FriendViewContainer extends Component {
     this.props.getFriends();
   }
 
+  handleChanges;
+
   render() {
+    console.log("FVC this.props", this.props);
     return (
       <div>
         <h2>Friends app incoming</h2>
-        {this.props.friends.map(friend => {
+        {this.props.friends.friends.map(friend => {
           console.log("FVC friend", friend);
           return <FriendCard friend={friend} key={friend.id} />;
         })}
+        <FriendForm />
       </div>
     );
   }

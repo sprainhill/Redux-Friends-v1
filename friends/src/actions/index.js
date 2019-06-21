@@ -5,6 +5,9 @@ export const FETCH_FRIENDS_ERROR = "FETCH_FRIENDS_ERROR";
 export const LOGIN_START = "LOGIN_START";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_ERROR = "LOGIN_ERROR";
+export const ADD_FRIEND_START = "ADD_FRIEND_START";
+export const ADD_FRIEND_SUCCESS = "ADD_FRIEND_SUCCESS";
+export const ADD_FRIEND_ERROR = "ADD_FRIEND_ERROR";
 
 export const login = creds => dispatch => {
   dispatch({ type: LOGIN_START });
@@ -48,5 +51,21 @@ export const getFriends = () => dispatch => {
         type: FETCH_FRIENDS_ERROR,
         payload: error.response.data.error
       });
+    });
+};
+
+export const addFriend = newFriend => dispatch => {
+  dispatch({ type: ADD_FRIEND_START });
+  axios
+    .post("http://localhost:5000/api/friends", newFriend, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(response => {
+      console.log("addFriend response", response);
+      dispatch({ type: ADD_FRIEND_SUCCESS, payload: response.data });
+    })
+    .catch(error => {
+      console.log("addFriend error", error);
+      dispatch({ type: ADD_FRIEND_ERROR, payload: error });
     });
 };
